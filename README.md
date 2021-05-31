@@ -88,56 +88,21 @@ CREATE EVENT IF NOT EXISTS exchange_Fail ON SCHEDULE EVERY 1 HOUR STARTS '2021-0
 
 
 
-🤭 Nest Js Socket Io   
+🤭 Nest Js   
 -----------------
 
 <br/>
 <br/>
 
-저희는 Nest Js를 사용해서 Socket Io 서비스를 구현하였습니다.  
-하면서 가장 어려웠던 점은 일단 Nest Js Socket Io 예제가 너무 적었습니다.  
-그래서 공식문서를 보면서 이해를 하였고 이해하지 못한 기술들은 **Nest Js Discord**에서 해답을 얻거나  
+저희는 Nest Js를 사용해서 서비스를 구현하였습니다.  
+하면서 가장 어려웠던 점은 일단 Nest Js 처음 사용하며 각종 예제들이 적었습니다.  
+그래서 공식문서를 보면서 이해를 하였고 이해하지 못한 기술들은 **해외 블로그**에서 해답을 얻거나  
 **StackOverFlow**에 물어보는 식으로 해결하였습니다.
 
-<br/>
-<br/>
-
-Nest Js는 Socket Io를 사용할 때 **@WebSocketGateway**를 사용해서 Socket io 연결을 진행합니다.  
-
-```javascript
-@WebSocketGateway({
-	namespace: '/chatting'
-})
-export class ChatGateway
-	implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-  }
-```
 
 <br/>
-<br/>
 
-메시지를 보낼때는 javascript socket io와 똑같이 emit으로 보내고 on으로 받습니다.  
-다만, Nest Js는 on으로 소켓을 받지않고 **@SubscribeMessage()** 를 사용해서 받습니다.  
-
-즉, 보내는 쪽에서 emit('sendMsg')로 보내면 chat.gateway.ts에서는 @SubscribeMessage('sendMsg')로 받습니다.
-
-```javascript
-	@SubscribeMessage('sendMsg')
-	async handleMessage(client: Socket, itemChatDto: ItemChatDto) {
-		const chatMsg = await this.chatService.saveChatMsg(itemChatDto);
-		if (chatMsg['msg'] == 'success') {
-			this.server.to(itemChatDto.icrId).emit('getMsg', chatMsg['data']);
-		} else {
-			client.emit('getMsg', chatMsg['errorMsg']);
-		}
-	}
-```
-
-
-<br/>
-<br/>
-
-😭 Nestjs Socket Io 어려웠던 점
+😭 Nestjs  어려웠던 점
 -----------------  
 
 <br/>
